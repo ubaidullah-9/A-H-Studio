@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  
+  --color-skin-primary: #C5A059;
+  --color-skin-primary-dark: #A58039;
+  --color-skin-bg: #F9F8F6;
+  --color-skin-card: #ffffff;
+  --color-skin-text: #1A1A1A;
+  --color-skin-muted: #1A1A1A99;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--color-skin-bg);
+    color: var(--color-skin-text);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+  }
+}

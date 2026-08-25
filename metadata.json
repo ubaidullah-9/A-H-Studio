@@ -1,0 +1,6 @@
+{
+  "name": "AH Skin Studio",
+  "description": "Modern skin care clinic website featuring booking, services, patient dashboard, and secure payments.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

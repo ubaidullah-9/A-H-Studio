@@ -1,0 +1,61 @@
+{
+  "rules_version": "2",
+  "collections": [
+    {
+      "name": "services",
+      "description": "Clinic services and treatments offered.",
+      "fields": [
+        { "name": "name", "type": "string" },
+        { "name": "description", "type": "string" },
+        { "name": "price", "type": "string" },
+        { "name": "duration", "type": "string" },
+        { "name": "category", "type": "string" }
+      ],
+      "security": {
+        "read": "true",
+        "write": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'"
+      }
+    },
+    {
+      "name": "gallery",
+      "description": "Gallery images for the clinic.",
+      "fields": [
+        { "name": "url", "type": "string" }
+      ],
+      "security": {
+        "read": "true",
+        "write": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'"
+      }
+    },
+    {
+      "name": "appointments",
+      "description": "Patient appointments.",
+      "fields": [
+        { "name": "patientName", "type": "string" },
+        { "name": "patientEmail", "type": "string" },
+        { "name": "patientPhone", "type": "string" },
+        { "name": "serviceId", "type": "string" },
+        { "name": "date", "type": "string" },
+        { "name": "time", "type": "string" },
+        { "name": "status", "type": "string" },
+        { "name": "userId", "type": "string", "optional": true }
+      ],
+      "security": {
+        "read": "request.auth != null && (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' || resource.data.userId == request.auth.uid)",
+        "write": "request.auth != null && (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' || request.resource.data.userId == request.auth.uid)"
+      }
+    },
+    {
+      "name": "users",
+      "description": "User profiles (admin and patients).",
+      "fields": [
+        { "name": "email", "type": "string" },
+        { "name": "role", "type": "string", "validation": "request.resource.data.role in ['admin', 'patient']" }
+      ],
+      "security": {
+        "read": "request.auth != null && (request.auth.uid == resource.id || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')",
+        "write": "request.auth != null && (request.auth.uid == request.resource.id || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')"
+      }
+    }
+  ]
+}
